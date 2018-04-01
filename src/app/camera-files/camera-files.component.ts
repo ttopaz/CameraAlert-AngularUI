@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CameraService } from '../camera.service';
 import { CameraFile } from './camera-file';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-camera-files',
@@ -13,14 +14,24 @@ import { CameraFile } from './camera-file';
 })
 export class CameraFilesComponent implements OnInit {
 
-  cameraFiles : CameraFile[];
-  cameraFileImages : any;
+  cameraFiles = new MatTableDataSource();
+  cameraFileImages : any[];
+  displayedColumns = ['Image', 'File', 'Date'];
 
   constructor(private route: ActivatedRoute, private http: HttpClient
     , private service: CameraService, private Sanitization: DomSanitizer) { }
 
   ngOnInit() {
     this.getCameraFiles(this.route.snapshot.params['id']);
+  }
+
+  ngOnDestroy() {
+    this.cameraFileImages.forEach(element => {
+      if (element)
+      {
+        URL.revokeObjectURL(element);
+      }
+    });
   }
 
   private getCameraFiles(id) {
@@ -33,7 +44,7 @@ export class CameraFilesComponent implements OnInit {
               .subscribe(img => this.cameraFileImages[idx] 
                 = this.Sanitization.bypassSecurityTrustUrl(img));
           });              
-          this.cameraFiles = data
+          this.cameraFiles.data = data
         })          
   }
 }

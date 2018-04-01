@@ -40,7 +40,7 @@ export class CameraService {
     )
   }
 
-  public getCameraFileImage (id, file): Observable<any> {
+  public getCameraFileImage (id, file): Observable<string> {
     let username: string = 'admin';
     let password: string = 'admin';
     const headers = new HttpHeaders()

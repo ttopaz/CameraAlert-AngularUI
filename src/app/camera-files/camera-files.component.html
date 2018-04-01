@@ -1,19 +1,21 @@
 <div class="container">
   <h1>Camera Files</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>File</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cameraFile of cameraFiles; let idx=index">
-        <td><img style="width:150px" bind-src="cameraFileImages[idx]"></td>
-        <td>{{ cameraFile.File }}</td>
-        <td>{{ cameraFile.Date | date:"medium" }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div>
+  <mat-table #table [dataSource]="cameraFiles">
+    <ng-container matColumnDef="Image">
+        <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+        <mat-cell *matCellDef="let cameraFile; let idx=index"><img style="width:150px" bind-src="cameraFileImages[idx]"></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="File">
+        <mat-header-cell *matHeaderCellDef> File </mat-header-cell>
+        <mat-cell *matCellDef="let cameraFile">{{ cameraFile.File }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Date">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let cameraFile">{{ cameraFile.Date | date:'medium'}}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let cameraFile; columns: displayedColumns;"></mat-row>
+</mat-table>      
+</div>
 </div>
