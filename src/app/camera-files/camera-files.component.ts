@@ -30,7 +30,8 @@ export class CameraFilesComponent implements OnInit {
           this.cameraFileImages = new Array(data.length);
           data.forEach((item, idx) => { 
             this.service.getCameraFileImage(id, item.File)
-              .subscribe(img => this.cameraFileImages[idx] = this.Sanitization.bypassSecurityTrustUrl(img);
+              .subscribe(img => this.cameraFileImages[idx] 
+                = this.Sanitization.bypassSecurityTrustUrl(img));
           });              
           this.cameraFiles = data
         })          

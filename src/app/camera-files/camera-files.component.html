@@ -12,7 +12,7 @@
       <tr *ngFor="let cameraFile of cameraFiles; let idx=index">
         <td><img style="width:150px" bind-src="cameraFileImages[idx]"></td>
         <td>{{ cameraFile.File }}</td>
-        <td>{{ cameraFile.Date }}</td>
+        <td>{{ cameraFile.Date | date:"medium" }}</td>
       </tr>
     </tbody>
   </table>

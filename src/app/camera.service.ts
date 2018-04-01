@@ -23,11 +23,6 @@ export class CameraService {
     return this.http.get<Camera[]>(camerasUrl, {headers});
   }
 
-  private buildImageUrl (id: string, file : CameraFile) : string {
-    return "http://admin:admin@localhost:3500/GetCameraImage?Id=" + id + "&File=" + 
-    file.File.replace(".mp4", ".jpg");
-  }
-
   public getCameraFiles (id): Observable<CameraFile[]> {
     let username: string = 'admin';
     let password: string = 'admin';
@@ -38,7 +33,7 @@ export class CameraService {
     return this.http.get<CameraFile[]>(cameraFilesUrl, {headers}).pipe(
       map(res => { 
         return res.map(item => { 
-          item.ImageUrl = this.buildImageUrl(id, item);
+          item.Date = new Date(item.Date.toLocaleString());
           return item;
         });
       })

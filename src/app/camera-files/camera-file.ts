@@ -3,7 +3,7 @@ export class CameraFile {
     Path: string;
     ImagePath: string;
     Size : number;
-    Date : string;
-    CreateTime : string;
+    Date : Date;
+    CreateTime : Date;
     ImageUrl : string;
   }
