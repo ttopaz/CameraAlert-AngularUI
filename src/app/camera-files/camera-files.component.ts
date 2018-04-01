@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -12,7 +12,10 @@ import {MatTableDataSource} from '@angular/material';
   styleUrls: ['./camera-files.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class CameraFilesComponent implements OnInit {
+
+export class CameraFilesComponent implements OnInit, OnChanges {
+
+  @Input() cameraId: string;
 
   cameraFiles = new MatTableDataSource();
   cameraFileImages : any[];
@@ -22,8 +25,14 @@ export class CameraFilesComponent implements OnInit {
     , private service: CameraService, private Sanitization: DomSanitizer) { }
 
   ngOnInit() {
-    this.getCameraFiles(this.route.snapshot.params['id']);
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // only run when property "cameraId" changed
+    if (changes['cameraId']) {
+        this.getCameraFiles(this.cameraId);
+    }
+}
 
   ngOnDestroy() {
     this.cameraFileImages.forEach(element => {

@@ -1,25 +1,6 @@
-<div class="container">
-  <h1>Camera List</h1>
-  <div class="mat-elevation-z8">
-  <mat-table #table [dataSource]="cameras">
-      <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-          <mat-cell *matCellDef="let camera"> {{camera.Id}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="Name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-          <mat-cell *matCellDef="let camera"> {{camera.Name}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="Files">
-            <mat-header-cell *matHeaderCellDef> Files </mat-header-cell>
-            <mat-cell *matCellDef="let camera"> {{camera.Files}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="Action">
-          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-          <mat-cell *matCellDef="let camera"><button class="btn btn-small btn-success" (click)="showFiles(camera.Id)" type="button">Show Files</button> </mat-cell>
-       </ng-container>
-       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let camera; columns: displayedColumns;"></mat-row>
-  </mat-table>        
-</div>
-</div>
+<mat-tab-group (selectedTabChange)="tabChanged($event)">
+    <mat-tab *ngFor="let camera of cameras" label='{{camera.Name}}'>
+    </mat-tab>
+</mat-tab-group>
+<app-camera-files [cameraId]="cameraId"></app-camera-files>
+

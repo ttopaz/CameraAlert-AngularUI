@@ -13,22 +13,30 @@ export class CameraService {
 
   constructor(private http: HttpClient) { }
 
-  public getCameras (): Observable<Camera[]> {
+  private getBaseUrl() : string 
+  {
+     return "http://localhost:3500";
+//     return "http://24.98.212.41:3500";
+  }
+
+  private getHeaders() : HttpHeaders 
+  {
     let username: string = 'admin';
     let password: string = 'admin';
     const headers = new HttpHeaders()
             .set("Authorization", "Basic " + btoa(username + ":" + password));
-    let camerasUrl = "http://localhost:3500/Cameras";
+    return headers;        
+  }
 
+  public getCameras (): Observable<Camera[]> {
+    let camerasUrl = this.getBaseUrl() + "/Cameras";
+    const headers = this.getHeaders();
     return this.http.get<Camera[]>(camerasUrl, {headers});
   }
 
   public getCameraFiles (id): Observable<CameraFile[]> {
-    let username: string = 'admin';
-    let password: string = 'admin';
-    const headers = new HttpHeaders()
-            .set("Authorization", "Basic " + btoa(username + ":" + password));
-    let cameraFilesUrl = "http://localhost:3500/CameraFiles?Id=" + id + "&Filter=.mp4";
+    const headers = this.getHeaders();
+    let cameraFilesUrl = this.getBaseUrl() + "/CameraFiles?Id=" + id + "&Filter=.mp4";
 
     return this.http.get<CameraFile[]>(cameraFilesUrl, {headers}).pipe(
       map(res => { 
@@ -41,12 +49,9 @@ export class CameraService {
   }
 
   public getCameraFileImage (id, file): Observable<string> {
-    let username: string = 'admin';
-    let password: string = 'admin';
-    const headers = new HttpHeaders()
-            .set("Authorization", "Basic " + btoa(username + ":" + password));
-    let cameraFileImageUrl = "http://localhost:3500/GetCameraImage?Id=" + id + "&File=" + 
-    file.replace(".mp4", ".jpg");
+    const headers = this.getHeaders();
+    let cameraFileImageUrl = this.getBaseUrl() + "/GetCameraImage?Id=" + id + "&File=" + 
+    file.replace(".mp4", ".jpg") + "&Width=120";
 
     const options = {headers, responseType: 'blob' as 'json' };
     return this.http.get<any>(cameraFileImageUrl, options).pipe(

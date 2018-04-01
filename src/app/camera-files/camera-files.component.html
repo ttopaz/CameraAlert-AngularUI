@@ -1,6 +1,4 @@
 <div class="container">
-  <h1>Camera Files</h1>
-  <div>
   <mat-table #table [dataSource]="cameraFiles">
     <ng-container matColumnDef="Image">
         <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
@@ -17,5 +15,4 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let cameraFile; columns: displayedColumns;"></mat-row>
 </mat-table>      
-</div>
 </div>
