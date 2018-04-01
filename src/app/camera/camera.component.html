@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>Camera List</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Files</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let camera of cameras">
+        <td>{{ camera.Id }}</td>
+        <td>{{ camera.Name }}</td>
+        <td>{{ camera.Files }}</td>
+        <td><button class="btn btn-small btn-success" (click)="showFiles(camera.Id)" type="button">Show Files</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

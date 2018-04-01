@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>Camera Files</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>File</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cameraFile of cameraFiles; let idx=index">
+        <td><img style="width:150px" bind-src="cameraFileImages[idx]"></td>
+        <td>{{ cameraFile.File }}</td>
+        <td>{{ cameraFile.Date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
