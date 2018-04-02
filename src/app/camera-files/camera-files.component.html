@@ -1,18 +1,16 @@
 <div class="container">
-  <mat-table #table [dataSource]="cameraFiles">
+  <mat-table #table class='table' [dataSource]="cameraFiles">
     <ng-container matColumnDef="Image">
         <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-        <mat-cell *matCellDef="let cameraFile; let idx=index"><img style="width:150px" bind-src="cameraFileImages[idx]"></mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="File">
-        <mat-header-cell *matHeaderCellDef> File </mat-header-cell>
-        <mat-cell *matCellDef="let cameraFile">{{ cameraFile.File }}</mat-cell>
+        <mat-cell class='image-cell' *matCellDef="let cameraFile; let idx=index"><img style="width:150px;" 
+          [style.display]="cameraFileImages[idx] ? 'block' : 'none'"
+          [src]="cameraFileImages[idx]"></mat-cell>
     </ng-container>
     <ng-container matColumnDef="Date">
         <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-        <mat-cell *matCellDef="let cameraFile">{{ cameraFile.Date | date:'medium'}}</mat-cell>
+        <mat-cell *matCellDef="let cameraFile"><div><b>{{ cameraFile.CreateTime | date}}</b></div>
+          <div>{{ cameraFile.CreateTime | date:'mediumTime'}} - {{ cameraFile.Date | date:'mediumTime'}}</div></mat-cell>
     </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let cameraFile; columns: displayedColumns;"></mat-row>
 </mat-table>      
 </div>

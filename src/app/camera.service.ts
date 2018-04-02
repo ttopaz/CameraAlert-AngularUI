@@ -15,7 +15,7 @@ export class CameraService {
 
   private getBaseUrl() : string 
   {
-     return "http://localhost:3500";
+     return "http://192.168.1.80:3500";
 //     return "http://24.98.212.41:3500";
   }
 
@@ -42,6 +42,7 @@ export class CameraService {
       map(res => { 
         return res.map(item => { 
           item.Date = new Date(item.Date.toLocaleString());
+          item.CreateTime = new Date(item.CreateTime.toLocaleString());
           return item;
         });
       })

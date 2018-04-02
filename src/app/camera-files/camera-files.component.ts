@@ -19,7 +19,7 @@ export class CameraFilesComponent implements OnInit, OnChanges {
 
   cameraFiles = new MatTableDataSource();
   cameraFileImages : any[];
-  displayedColumns = ['Image', 'File', 'Date'];
+  displayedColumns = ['Image', 'Date'];
 
   constructor(private route: ActivatedRoute, private http: HttpClient
     , private service: CameraService, private Sanitization: DomSanitizer) { }
