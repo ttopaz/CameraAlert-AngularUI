@@ -1,8 +1,8 @@
 <div class="container">
-  <mat-table #table class='table' [dataSource]="cameraFiles">
+  <mat-table #table class='camera-table' [dataSource]="cameraFiles">
     <ng-container matColumnDef="Image">
         <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-        <mat-cell class='image-cell' *matCellDef="let cameraFile; let idx=index"><img style="width:150px;" 
+        <mat-cell class='image-cell' *matCellDef="let cameraFile; let idx=index"><img  
           [style.display]="cameraFileImages[idx] ? 'block' : 'none'"
           [src]="cameraFileImages[idx]"></mat-cell>
     </ng-container>
@@ -11,6 +11,6 @@
         <mat-cell *matCellDef="let cameraFile"><div><b>{{ cameraFile.CreateTime | date}}</b></div>
           <div>{{ cameraFile.CreateTime | date:'mediumTime'}} - {{ cameraFile.Date | date:'mediumTime'}}</div></mat-cell>
     </ng-container>
-    <mat-row *matRowDef="let cameraFile; columns: displayedColumns;"></mat-row>
+    <mat-row class="camera-row" (click)="openVideo(cameraFile)" *matRowDef="let cameraFile; columns: displayedColumns;"></mat-row>
 </mat-table>      
 </div>

@@ -5,6 +5,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CameraService } from '../camera.service';
 import { CameraFile } from './camera-file';
 import {MatTableDataSource} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {CameraVideoComponent} from '../camera-video/camera-video.component'
 
 @Component({
   selector: 'app-camera-files',
@@ -22,7 +24,8 @@ export class CameraFilesComponent implements OnInit, OnChanges {
   displayedColumns = ['Image', 'Date'];
 
   constructor(private route: ActivatedRoute, private http: HttpClient
-    , private service: CameraService, private Sanitization: DomSanitizer) { }
+    , private service: CameraService, private Sanitization: DomSanitizer,
+      public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -55,5 +58,21 @@ export class CameraFilesComponent implements OnInit, OnChanges {
           });              
           this.cameraFiles.data = data
         })          
+  }
+
+  public openVideo(cameraFile : CameraFile)
+  {
+    let dialogRef = this.dialog.open(CameraVideoComponent, {
+      height: "90%",
+      width: "90%",
+      data: { 
+        name : cameraFile.Date.toLocaleString(),
+        videoUrl : "http://192.168.1.80:3500/PlayCameraFile?Id=" + this.cameraId + "&File=" + cameraFile.File
+      }        
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

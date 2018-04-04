@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CameraFilesComponent } from './camera-files/camera-files.component';
 
 import { CameraService } from './camera.service';
+import { CameraVideoComponent } from './camera-video/camera-video.component';
 
 const appRoutes: Routes = [
   {
@@ -35,7 +36,11 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     CameraComponent,
-    CameraFilesComponent
+    CameraFilesComponent,
+    CameraVideoComponent
+  ],
+  entryComponents: [
+    CameraVideoComponent
   ],
   imports: [
     BrowserModule,

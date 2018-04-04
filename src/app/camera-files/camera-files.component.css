@@ -1,4 +1,24 @@
+.camera-table
+{
+   width : 500px;
+   margin-left : 100px;
+}
+
+.mat-header-row, .mat-row {
+    border-bottom-width: 0px !important;
+    border-bottom-style: none;
+ }
+.camera-row
+{
+    border-width: 0px;
+}
+
 .image-cell
 {
     margin : 8px;
+}
+
+.image-cell img
+{
+    width : 150px;
 }

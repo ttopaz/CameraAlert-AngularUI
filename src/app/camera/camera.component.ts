@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, forwardRef } from '@angular/core';
 
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { CameraService } from '../camera.service';
 import { Camera } from './camera';
+import { AppComponent } from '../app.component';
 
 import {MatTableDataSource, MatTabChangeEvent} from '@angular/material';
 
@@ -19,7 +20,8 @@ export class CameraComponent implements OnInit {
   cameraId: string;
   
   constructor(private http: HttpClient, private router: Router
-    , private route: ActivatedRoute, private service: CameraService) { }
+    , private route: ActivatedRoute, private service: CameraService
+    , @Inject(forwardRef(() => AppComponent)) private _parent:AppComponent) { }
 
   ngOnInit() {
       this.service.getCameras()
@@ -29,6 +31,7 @@ export class CameraComponent implements OnInit {
   public tabChanged(tabChangeEvent: MatTabChangeEvent)
   {
       this.cameraId = this.cameras[tabChangeEvent.index].Id;
+      this._parent.camera = this.cameras[tabChangeEvent.index];
   }
 
   public showFiles(id)
