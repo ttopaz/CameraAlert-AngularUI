@@ -26,6 +26,7 @@ export class CameraFilesComponent implements OnInit, OnChanges {
   pageEvent : PageEvent;
   pageIndex : number;
   pageSize : number;
+  tableLoaded : boolean;
 
   constructor(private route: ActivatedRoute, private http: HttpClient
     , private service: CameraService, private Sanitization: DomSanitizer,
@@ -41,8 +42,8 @@ export class CameraFilesComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     // only run when property "cameraId" changed
     if (changes['cameraId']) {
-        this.paginator.pageIndex = 0;
-        this.getCameraFiles(null);
+      this.tableLoaded = false;
+      this.getCameraFiles(null);
     }
 }
 
@@ -76,7 +77,9 @@ export class CameraFilesComponent implements OnInit, OnChanges {
                   }
                 });
           });              
-          this.cameraFiles.data = data
+          this.cameraFiles.data = data;
+          this.tableLoaded = true;
+          this.paginator.pageIndex = 0;
         })   
   }
 

@@ -1,10 +1,11 @@
 <div class="container">
-  <mat-table #table class='camera-table' [dataSource]="cameraFiles">
+  <mat-progress-bar [style.display]="tableLoaded ? 'none' : 'block'" mode="indeterminate"></mat-progress-bar>
+  <mat-table [style.display]="tableLoaded ? 'block' : 'none'" #table class='camera-table' [dataSource]="cameraFiles">
     <ng-container matColumnDef="Image">
         <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
         <mat-cell class='image-cell' *matCellDef="let cameraFile; let idx=index"><img  
-          [style.display]="cameraFileImages[(paginator.pageIndex * paginator.pageSize) + idx] ? 'block' : 'none'"
-          [src]="cameraFileImages[(paginator.pageIndex * paginator.pageSize) + idx]"></mat-cell>
+          [src]="!cameraFileImages[(paginator.pageIndex * paginator.pageSize) + idx] ? '/assets/placeholder.png' : cameraFileImages[(paginator.pageIndex * paginator.pageSize) + idx]">
+        </mat-cell>
     </ng-container>
     <ng-container matColumnDef="Date">
         <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
@@ -13,7 +14,7 @@
     </ng-container>
     <mat-row class="camera-row" (click)="openVideo(cameraFile)" *matRowDef="let cameraFile; columns: displayedColumns;"></mat-row>
 </mat-table>      
-<mat-paginator #paginator
+<mat-paginator #paginator [style.display]="tableLoaded ? 'block' : 'none'"
   [pageSize]="10"
   [pageSizeOptions]="[5, 10, 20]"
   [showFirstLastButtons]="true">

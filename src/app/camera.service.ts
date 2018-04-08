@@ -90,4 +90,12 @@ export class CameraService {
         ))
     }
   }
+
+  public startCameraLiveVideo (camera: Camera): Observable<boolean> {
+    const headers = this.getHeaders();
+    let cameraLiveVideoUrl = this.getBaseUrl() + "/PlayLiveVideo?Id=" + camera.Id;
+    return this.http.get<any>(cameraLiveVideoUrl, {headers}).pipe(
+      map(res => { return true }
+    ))
+  }
 }
