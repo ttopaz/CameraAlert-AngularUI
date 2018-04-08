@@ -3,7 +3,8 @@ import { ResponseContentType } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import { map, filter, scan } from 'rxjs/operators';
+import { map, filter, scan, } from 'rxjs/operators';
+import 'rxjs/add/observable/of';
 
 import { Camera } from './camera/camera';
 import { CameraFile } from './camera-files/camera-file';
@@ -15,7 +16,8 @@ export class CameraService {
 
   private getBaseUrl() : string 
   {
-     return "http://192.168.1.80:3500";
+//    return "http://192.168.1.80:3500";
+     return "http://192.168.1.81:3500";
 //     return "http://24.98.212.41:3500";
   }
 
@@ -36,10 +38,11 @@ export class CameraService {
 
   public getCameraFiles (id): Observable<CameraFile[]> {
     const headers = this.getHeaders();
-    let cameraFilesUrl = this.getBaseUrl() + "/CameraFiles?Id=" + id + "&Filter=.mp4";
+    let cameraFilesUrl = this.getBaseUrl() + "/CameraFiles?Id=" + id + "&Filter=.mp4&Days=1";
 
     return this.http.get<CameraFile[]>(cameraFilesUrl, {headers}).pipe(
       map(res => { 
+        res.length = res.length > 100 ? 100 : res.length;
         return res.map(item => { 
           item.Date = new Date(item.Date.toLocaleString());
           item.CreateTime = new Date(item.CreateTime.toLocaleString());
@@ -49,14 +52,42 @@ export class CameraService {
     )
   }
 
-  public getCameraFileImage (id, file): Observable<string> {
+  public getCameraFileImage (cameraFile: CameraFile): Observable<string> {
     const headers = this.getHeaders();
-    let cameraFileImageUrl = this.getBaseUrl() + "/GetCameraImage?Id=" + id + "&File=" + 
-    file.replace(".mp4", ".jpg") + "&Width=120";
+    if (cameraFile.imageUrl)
+    {
+        let cameraFileImageUrl = this.getBaseUrl() + cameraFile.imageUrl + "&Width=120";
+        const options = {headers, responseType: 'blob' as 'json' };
+        return this.http.get<any>(cameraFileImageUrl, options).pipe(
+          map(res => { return URL.createObjectURL(res) }
+        ))
+    }
+    else if (cameraFile.imageUrlProvider)
+    {
+        let cameraFileImageUrl = this.getBaseUrl() + cameraFile.imageUrlProvider;
+        return this.http.get<string>(cameraFileImageUrl, {headers}).pipe(
+          map(res => { return res }
+        ))
+    }
+    else
+    {
+      return Observable.of("");
+    }
+  }
 
-    const options = {headers, responseType: 'blob' as 'json' };
-    return this.http.get<any>(cameraFileImageUrl, options).pipe(
-      map(res => { return URL.createObjectURL(res) }
-    ))
+  public getCameraFileVideo (cameraFile: CameraFile): Observable<string> {
+    const headers = this.getHeaders();
+    if (cameraFile.videoUrl)
+    {
+        let cameraFileVideoUrl = this.getBaseUrl() + cameraFile.videoUrl;
+        return Observable.of(cameraFileVideoUrl);
+    }
+    else if (cameraFile.videoUrlProvider)
+    {
+        let cameraFileVideoUrl = this.getBaseUrl() + cameraFile.videoUrlProvider;
+        return this.http.get<any>(cameraFileVideoUrl, {headers}).pipe(
+          map(res => { return res.Url }
+        ))
+    }
   }
 }
