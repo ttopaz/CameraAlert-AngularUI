@@ -1,4 +1,3 @@
-<div>{{videoUrl}}</div>
 <div style="width:100%; height:100%">
-  <canvas #myCanvas crossOrigin="anonymous"></canvas>
+  <video #video id="liveVideo" height="100%" width="100%" controls [src]="videoUrl"></video>
 </div>

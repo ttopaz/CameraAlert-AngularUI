@@ -1,3 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+
+.full-width-dialog .mat-dialog-container {
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left:0px;
+ }
+
+ .no-padding-dialog .mat-dialog-container {
+     padding: 0px;
+     margin : 0px;
+     overflow : hidden;
+}

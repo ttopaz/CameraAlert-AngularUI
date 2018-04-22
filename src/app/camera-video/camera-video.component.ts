@@ -8,12 +8,18 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class CameraVideoComponent {
   videoUrl : string;
+  title : string;
   constructor(
     public dialogRef: MatDialogRef<CameraVideoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) 
     { 
       this.videoUrl = data.videoUrl;
+      this.title = data.title;
     }
+
+cancel = function() {
+  this.dialogRef.close();
+};
 
   onNoClick(): void {
     this.dialogRef.close();

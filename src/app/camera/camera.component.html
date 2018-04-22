@@ -1,5 +1,5 @@
 <mat-tab-group (selectedTabChange)="tabChanged($event)">
-    <mat-tab *ngFor="let camera of cameras" label='{{camera.Name}}'>
+    <mat-tab color="primary" *ngFor="let camera of cameras" label='{{camera.Name}}'>
     </mat-tab>
 </mat-tab-group>
 <app-camera-files [cameraId]="cameraId"></app-camera-files>

@@ -1,5 +1,15 @@
+<div mat-dialog>
+    <mat-toolbar class="video-bar">
+        <mat-toolbar-row>
+            <span>{{title}}</span>
+            <span class="video-bar-spacer"></span>
+            <i (click)="cancel()" title="close" class="material-icons close-button">close</i>
+        </mat-toolbar-row>
+      </mat-toolbar>
+  
 <mat-dialog-content>
   <div class="video_container">
   <video [src]="videoUrl" height="100%" width="100%" autoplay controls></video>
 </div>  
 </mat-dialog-content>
+</div>

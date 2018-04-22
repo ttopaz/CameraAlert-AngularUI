@@ -4,3 +4,4 @@ interface NodeModule {
   id: string;
 }
 declare module 'jsmpeg';
+declare module 'mediaelement';

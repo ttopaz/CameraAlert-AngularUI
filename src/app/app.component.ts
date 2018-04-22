@@ -23,9 +23,9 @@ export class AppComponent {
       {
         let dialogRef = this.dialog.open(CameraLiveVideoComponent, {
           height: "90%",
-          width: "90%",
+          width: "95%",
           data: { 
-            url : "test"
+            url : this.camera.LiveVideo
           }        
         });
       })

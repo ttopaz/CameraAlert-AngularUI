@@ -9,7 +9,7 @@ import { CameraComponent } from './camera/camera.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule, Routes } from '@angular/router';
 import { CameraFilesComponent } from './camera-files/camera-files.component';
 
@@ -50,6 +50,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     MaterialModule,
     RouterModule.forRoot(
       appRoutes,

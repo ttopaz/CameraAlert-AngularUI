@@ -9,7 +9,7 @@
     </ng-container>
     <ng-container matColumnDef="Date">
         <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-        <mat-cell *matCellDef="let cameraFile"><div><b>{{ cameraFile.Name}}</b></div>
+        <mat-cell class='data-cell' *matCellDef="let cameraFile"><div><b>{{ cameraFile.Name}}</b></div>
           <div><b>{{ cameraFile.CreateTime | date}}</b> {{ cameraFile.Date | date:'mediumTime'}}</div></mat-cell>
     </ng-container>
     <mat-row class="camera-row" (click)="openVideo(cameraFile)" *matRowDef="let cameraFile; columns: displayedColumns;"></mat-row>

@@ -3,4 +3,5 @@ export class Camera {
     Name: string;
     Files: string;
     LiveIp : string;
-  }
+    LiveVideo : string;
+}

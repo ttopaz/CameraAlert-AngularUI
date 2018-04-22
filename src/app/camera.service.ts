@@ -16,7 +16,7 @@ export class CameraService {
 
   private getBaseUrl() : string 
   {
-//    return "http://192.168.1.80:3500";
+//     return "http://192.168.1.80:3500";
      return "http://192.168.1.81:3500";
 //     return "http://24.98.212.41:3500";
   }
@@ -91,11 +91,13 @@ export class CameraService {
     }
   }
 
-  public startCameraLiveVideo (camera: Camera): Observable<boolean> {
+  public startCameraLiveVideo (camera: Camera): Observable<string> {
     const headers = this.getHeaders();
-    let cameraLiveVideoUrl = this.getBaseUrl() + "/PlayLiveVideo?Id=" + camera.Id;
-    return this.http.get<any>(cameraLiveVideoUrl, {headers}).pipe(
-      map(res => { return true }
-    ))
+    let cameraLiveVideoUrl = camera.LiveVideo; 
+    return Observable.of(cameraLiveVideoUrl);
+//this.getBaseUrl() + "/PlayLiveVideo?Id=" + camera.Id;
+    //return this.http.get<any>(cameraLiveVideoUrl, {headers}).pipe(
+      //map(res => { return true }
+ //   ))
   }
 }

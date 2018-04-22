@@ -1,7 +1,22 @@
-import { Component, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import * as jsmpeg from 'jsmpeg';
-import { ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  Inject
+} from '@angular/core';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material';
+import {
+  ViewChild,
+  ElementRef
+} from '@angular/core';
+import {
+  DomSanitizer,
+  SafeUrl
+} from '@angular/platform-browser';
+
+declare var $: any;
 
 @Component({
   selector: 'app-camera-live-video',
@@ -10,26 +25,44 @@ import { ViewChild, ElementRef } from '@angular/core';
 })
 
 export class CameraLiveVideoComponent {
-  videoUrl : string;
-  client : WebSocket;
-  @ViewChild('myCanvas') private myCanvas: ElementRef; 
-  constructor(public dialogRef: MatDialogRef<CameraLiveVideoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) 
-    { 
-       this.videoUrl = 'ws://192.168.1.80:9999';
-    }
+  videoUrl: any;
+  mediaElement: any;
+  constructor(public dialogRef: MatDialogRef < CameraLiveVideoComponent > , private Sanitization: DomSanitizer,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.videoUrl = this.Sanitization.bypassSecurityTrustUrl(data.url);
+  }
 
-    ngAfterViewInit() : void{
-      this.client = new WebSocket('ws://192.168.1.80:9999');
-      var canvas = this.myCanvas.nativeElement;
-      var ctx = canvas.getContext("2d");
-     ctx.fillStyle = "blue";
-     ctx.crossOrigin = "anonymous";
-     ctx.fillRect(0, 0, canvas.width, canvas.height);
-      var player = new jsmpeg(this.client, {canvas : canvas});
+  ngAfterViewInit() {
+    $('#liveVideo').mediaelementplayer({
+      pluginPath: '/assets/mediaelement/',
+      success: function(mediaElement, originalNode, instance) {
+        $('.mejs__overlay-button').css('display', 'none');
+        this.mediaElement = instance;
+        instance.load();
+        mediaElement.addEventListener('loadstart', function() {
+          setTimeout(() => instance.play(), 500);
+        }, false);
+        mediaElement.addEventListener('canplay', function() {
+          instance.play();
+        }, false);
+        mediaElement.addEventListener('loadedmetadata', function() {
+          instance.play();
+        }, false);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.mediaElement) {
+      try {
+        this.mediaElement.pause();
+        this.mediaElement.remove(true);
+      } catch (err) {
+        console.log(err);
+      }
     }
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
-  
 }

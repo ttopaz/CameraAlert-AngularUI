@@ -1,6 +1,7 @@
 .mat-dialog-container {
     display: flex !important;
     flex-direction: column;
+    padding : 0px !important;
 }
 
 .mat-dialog-container > * {
@@ -26,4 +27,30 @@
 .video_container
 {
     object-fit: cover;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.video-bar {
+    background : none;
+    min-height: 48px;
+    mat-toolbar-row
+    {
+        height: 48px;
+    }
+}
+
+.close-button
+{
+    cursor: pointer;
+    &:hover {
+        background: #f5f5f5;
+    }
+    &:active {
+        background: #eaeaea;
+    }
+}
+
+.video-bar-spacer {
+    flex: 1 1 auto;
 }
