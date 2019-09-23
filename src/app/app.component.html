@@ -1,10 +1,10 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <span>Camera Alert</span>
+      <span [routerLink]="['./cameras']">Camera Alert</span>
   
       <span class="bar-spacer"></span>
-      <button mat-button (click)="showLiveVideo()"><i class="material-icons" title="Live Video">videocam</i></button>
-      <button mat-button>About</button>    
+      <button mat-button *ngIf="hasLiveVideo()" (click)="showLiveVideo()"><i class="material-icons" title="Live Video">videocam</i></button>
+      <button mat-button (click)="showAbout()">About</button>    
 </mat-toolbar-row>
   </mat-toolbar>
   <router-outlet></router-outlet>

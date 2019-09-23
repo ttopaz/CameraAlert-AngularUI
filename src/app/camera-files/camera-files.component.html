@@ -1,22 +1,33 @@
 <div class="container">
+    <mat-select [(ngModel)]="selectedMonth" (selectionChange)="monthChanged($event.value)">
+        <mat-option *ngFor="let month of months" [value]="month.Value">
+          {{month.Name}}
+        </mat-option>
+</mat-select>
+<mat-chip-list [selectable]="true" aria-label="Days">
+    <mat-chip *ngFor="let day of days" [selected]="selectedDay == day.Value" (click)="dayChanged(day.Value)" [value]="day.Value">
+      {{day.Name}}
+  </mat-chip>  
+  </mat-chip-list>
   <mat-progress-bar [style.display]="tableLoaded ? 'none' : 'block'" mode="indeterminate"></mat-progress-bar>
-  <mat-table [style.display]="tableLoaded ? 'block' : 'none'" #table class='camera-table' [dataSource]="cameraFiles">
-    <ng-container matColumnDef="Image">
-        <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-        <mat-cell class='image-cell' *matCellDef="let cameraFile; let idx=index"><img  
-          [src]="!cameraFileImages[(paginator.pageIndex * paginator.pageSize) + idx] ? '/assets/placeholder.png' : cameraFileImages[(paginator.pageIndex * paginator.pageSize) + idx]">
-        </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="Date">
-        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-        <mat-cell class='data-cell' *matCellDef="let cameraFile"><div><b>{{ cameraFile.Name}}</b></div>
-          <div><b>{{ cameraFile.CreateTime | date}}</b> {{ cameraFile.Date | date:'mediumTime'}}</div></mat-cell>
-    </ng-container>
-    <mat-row class="camera-row" (click)="openVideo(cameraFile)" *matRowDef="let cameraFile; columns: displayedColumns;"></mat-row>
-</mat-table>      
-<mat-paginator #paginator [style.display]="tableLoaded ? 'block' : 'none'"
-  [pageSize]="10"
-  [pageSizeOptions]="[5, 10, 20]"
-  [showFirstLastButtons]="true">
+  <div [style.display]="tableLoaded ? 'block' : 'none'">
+
+    <mat-grid-list [cols]="cols | async" gutterSize="12px" [rowHeight]="rowHeight + 'rem'">
+  <mat-grid-tile (click)="openVideo(cameraFile)" *ngFor="let cameraFile of cameraFilesPageData; let idx=index">
+     <div class="camera-tile">
+    <div class="card-title" [style.font-size.em]="fontSize">
+      <div [innerHTML]="getCameraFileTitle(cameraFile)"></div>      
+    </div>
+    <img width="100%" flex [src]="!cameraFileImages[idx + (pageIndex * pageSize)] ? '/assets/placeholder.png' : cameraFileImages[idx + (pageIndex * pageSize)]">
+     </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-paginator #paginator
+              [pageSize]="10"
+              (page)="getCameraFiles($event)"
+              [pageSizeOptions]="[5, 10, 25, 100]">
 </mat-paginator>
+ 
+  </div>    
 </div>

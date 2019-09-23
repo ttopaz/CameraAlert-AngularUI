@@ -1,7 +1,7 @@
 <div mat-dialog>
     <mat-toolbar class="video-bar">
         <mat-toolbar-row>
-            <span>{{title}}</span>
+            <span [innerHTML]="title"></span>
             <span class="video-bar-spacer"></span>
             <i (click)="cancel()" title="close" class="material-icons close-button">close</i>
         </mat-toolbar-row>

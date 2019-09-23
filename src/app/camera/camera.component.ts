@@ -18,14 +18,13 @@ export class CameraComponent implements OnInit {
 
   cameras = []
   cameraId: string;
-  
+    
   constructor(private http: HttpClient, private router: Router
     , private route: ActivatedRoute, private service: CameraService
     , @Inject(forwardRef(() => AppComponent)) private _parent:AppComponent) { }
 
   ngOnInit() {
-      this.service.getCameras()
-      .subscribe(data => this.cameras = data);
+      this.service.getCameras().subscribe(data => this.cameras = data);
   }
 
   public tabChanged(tabChangeEvent: MatTabChangeEvent)

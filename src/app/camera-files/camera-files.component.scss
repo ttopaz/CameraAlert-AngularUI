@@ -11,10 +11,18 @@
  }
 .camera-tile
 {
-    border-width: 0px;
-
+    margin: 8px;
+    padding: 16px !important;
+    border : 1px solid #f5f5f5;
+    overflow : hidden;
+    background-color : #ffffff;
+    box-shadow: 2px 4px 10px grey; 
+    position : absolute;
+    left: 0px;
+    top : 0px;
   &:hover {
-    background: #f5f5f5;
+   // background: #f5f5f5;
+    background: rgba(178, 223, 219, 0.3);
   }
   &:active {
     background: #eaeaea;
@@ -26,10 +34,18 @@
     width:24%;
     margin-bottom: 2%;
     display: inline-block;
+    opacity:0.3;
+ //   background-color: rgba(178, 223, 219, 0.3);
 }
 .mat-card
 {
     display: inline-block;
+   // background-color: rgba(178, 223, 219, 0.3);
+}
+.card-title
+{
+    margin-bottom : 0px !important;
+ //   background-color: rgba(178, 223, 219, 0.3);
 }
 .data-cell
 {
@@ -51,6 +67,8 @@
 .container {
   min-height: 100%;
   width: 100%;
+  background-color: rgba(178, 223, 219, 0.3);
+  //    background-color: #004d40;
 }
 .full-width-dialog .mat-dialog-container {
     width: 100vw !important;

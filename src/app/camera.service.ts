@@ -24,7 +24,7 @@ export class CameraService {
   private getHeaders() : HttpHeaders 
   {
     let username: string = 'admin';
-    let password: string = 'admin';
+    let password: string = 'admin'; 
     const headers = new HttpHeaders()
             .set("Authorization", "Basic " + btoa(username + ":" + password));
     return headers;        
@@ -36,13 +36,19 @@ export class CameraService {
     return this.http.get<Camera[]>(camerasUrl, {headers});
   }
 
-  public getCameraFiles (id): Observable<CameraFile[]> {
+  public getCameraFiles (id, dateFilter): Observable<CameraFile[]> {
     const headers = this.getHeaders();
-    let cameraFilesUrl = this.getBaseUrl() + "/CameraFiles?Id=" + id + "&Filter=.mp4&Days=1";
+
+    let cameraFilesUrl = this.getBaseUrl() + "/CameraFiles?Id=" + id + "&Filter=.mp4";
+
+    if (dateFilter == null)
+      cameraFilesUrl += "&Days=1";
+    else
+      cameraFilesUrl += "&Date=" + dateFilter;            
 
     return this.http.get<CameraFile[]>(cameraFilesUrl, {headers}).pipe(
       map(res => { 
-        res.length = res.length > 100 ? 100 : res.length;
+        //res.length = res.length > 100 ? 100 : res.length;
         return res.map(item => { 
           item.Date = new Date(item.Date.toLocaleString());
           item.CreateTime = new Date(item.CreateTime.toLocaleString());

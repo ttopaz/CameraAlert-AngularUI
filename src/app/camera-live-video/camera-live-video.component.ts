@@ -35,6 +35,7 @@ export class CameraLiveVideoComponent {
   ngAfterViewInit() {
     $('#liveVideo').mediaelementplayer({
       pluginPath: '/assets/mediaelement/',
+      
       success: function(mediaElement, originalNode, instance) {
         $('.mejs__overlay-button').css('display', 'none');
         this.mediaElement = instance;

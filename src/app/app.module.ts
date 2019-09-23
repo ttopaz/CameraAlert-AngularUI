@@ -16,6 +16,7 @@ import { CameraFilesComponent } from './camera-files/camera-files.component';
 import { CameraService } from './camera.service';
 import { CameraVideoComponent } from './camera-video/camera-video.component';
 import { CameraLiveVideoComponent } from './camera-live-video/camera-live-video.component';
+import { AboutComponent } from './about/about.component';
 
 const appRoutes: Routes = [
   {
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
     component: CameraFilesComponent,
     data: { title: 'Camera Files' }
   },
-  { path: '',
+  { 
+    path: '',
     redirectTo: '/cameras',
     pathMatch: 'full'
   }
@@ -39,11 +41,13 @@ const appRoutes: Routes = [
     CameraComponent,
     CameraFilesComponent,
     CameraVideoComponent,
-    CameraLiveVideoComponent
+    CameraLiveVideoComponent,
+    AboutComponent
   ],
   entryComponents: [
     CameraVideoComponent,
-    CameraLiveVideoComponent
+    CameraLiveVideoComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
